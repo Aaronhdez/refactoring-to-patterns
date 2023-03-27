@@ -20,16 +20,20 @@ namespace RefactoringToPatterns.ComposeMethod
 
         public void Add(object element)
         {
-            if (_readOnly) return;
+            if (IsReadOnly()) return;
             if(ElementsExceedSize(IncreaseSizeBy(1))) ExpandList();
             _elements[_size++] = element;
+        }
+
+        private bool IsReadOnly()
+        {
+            return _readOnly;
         }
 
         private bool ElementsExceedSize(int newSize)
         {
             return newSize > _elements.Length;
         }
-
 
         private int IncreaseSizeBy(int amount)
         {
