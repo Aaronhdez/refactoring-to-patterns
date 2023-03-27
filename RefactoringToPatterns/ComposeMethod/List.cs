@@ -17,8 +17,13 @@ namespace RefactoringToPatterns.ComposeMethod
         public void Add(object element)
         {
             if (IsReadOnly()) return;
-            if(ElementsExceedSize(IncreaseSizeByOne())) ExpandList();
-            _elements[_size++] = element;
+            if (ElementsExceedSize(IncreaseSizeByOne())) ExpandList();
+            AddElement(element);
+        }
+
+        private object AddElement(object element)
+        {
+            return _elements[_size++] = element;
         }
 
         private bool IsReadOnly()
