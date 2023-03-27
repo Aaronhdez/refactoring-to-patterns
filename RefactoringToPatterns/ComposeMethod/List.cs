@@ -1,7 +1,3 @@
-using System;
-using System.Linq;
-using System.Web;
-
 namespace RefactoringToPatterns.ComposeMethod
 {
     public class List
