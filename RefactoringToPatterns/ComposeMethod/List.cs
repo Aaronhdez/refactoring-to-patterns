@@ -23,7 +23,7 @@ namespace RefactoringToPatterns.ComposeMethod
             if (_readOnly) return;
             var newSize = _size + 1;
 
-            if(newSize > _elements.Length) {
+            if(ElementsExceedSize(newSize)) {
                 var newElements = new object[_elements.Length + 10];
 
                 for (var i = 0; i < _size; i++)
@@ -33,6 +33,11 @@ namespace RefactoringToPatterns.ComposeMethod
             }
 
             _elements[_size++] = element;
+        }
+
+        private bool ElementsExceedSize(int newSize)
+        {
+            return newSize > _elements.Length;
         }
 
         public object[] Elements()
