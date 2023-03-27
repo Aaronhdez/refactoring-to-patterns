@@ -23,16 +23,22 @@ namespace RefactoringToPatterns.ComposeMethod
             if (_readOnly) return;
             var newSize = _size + 1;
 
-            if(ElementsExceedSize(newSize)) {
-                var newElements = new object[_elements.Length + 10];
-
-                for (var i = 0; i < _size; i++)
-                    newElements[i] = _elements[i];
-
-                _elements = newElements;
+            if(ElementsExceedSize(newSize))
+            {
+                ExtendList();
             }
 
             _elements[_size++] = element;
+        }
+
+        private void ExtendList()
+        {
+            var newElements = new object[_elements.Length + 10];
+
+            for (var i = 0; i < _size; i++)
+                newElements[i] = _elements[i];
+
+            _elements = newElements;
         }
 
         private bool ElementsExceedSize(int newSize)
