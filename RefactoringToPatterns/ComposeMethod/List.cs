@@ -9,24 +9,24 @@ namespace RefactoringToPatterns.ComposeMethod
 
         private readonly bool _readOnly;
         private int _size;
-        private Object[] _elements;
+        private object[] _elements;
 
         public List(bool readOnly)
         {
             _readOnly = readOnly;
             _size = 0;
-            _elements = new Object[_size];
+            _elements = new object[_size];
         }
 
-        public void Add(Object element)
+        public void Add(object element)
         {
             if (_readOnly) return;
-            int newSize = _size + 1;
+            var newSize = _size + 1;
 
             if(newSize > _elements.Length) {
-                Object[] newElements = new Object[_elements.Length + 10];
+                var newElements = new object[_elements.Length + 10];
 
-                for (int i = 0; i < _size; i++)
+                for (var i = 0; i < _size; i++)
                     newElements[i] = _elements[i];
 
                 _elements = newElements;
