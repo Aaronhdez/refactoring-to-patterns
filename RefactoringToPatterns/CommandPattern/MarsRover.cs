@@ -2,34 +2,86 @@ using RefactoringToPatterns.CommandPattern.Commands;
 
 namespace RefactoringToPatterns.CommandPattern
 {
+    public class RotateRightCommand : ICommand
+    {
+        private readonly MarsRover _marsRover;
+
+        public RotateRightCommand(MarsRover marsRover)
+        {
+            _marsRover = marsRover;
+        }
+
+        public void Execute()
+        {
+            // get new direction
+            var currentDirectionPosition = MarsRover.AvailableDirections.IndexOf(_marsRover.Direction);
+            if (currentDirectionPosition != 3)
+            {
+                _marsRover.Direction = MarsRover.AvailableDirections[currentDirectionPosition + 1];
+            }
+            else
+            {
+                _marsRover.Direction = MarsRover.AvailableDirections[0];
+            }
+        }
+    }
+
+    public class RotateLeftCommand : ICommand
+    {
+        private MarsRover _marsRover;
+
+        public RotateLeftCommand(MarsRover marsRover)
+        {
+            _marsRover = marsRover;
+        }
+
+        public void Execute()
+        {
+            // get new direction
+            var currentDirectionPosition = MarsRover.AvailableDirections.IndexOf(_marsRover.Direction);
+            if (currentDirectionPosition != 0)
+            {
+                _marsRover.Direction = MarsRover.AvailableDirections[currentDirectionPosition - 1];
+            }
+            else
+            {
+                _marsRover.Direction = MarsRover.AvailableDirections[3];
+            }
+        }
+    }
+
     public class MarsRover
     {
         public int X;
         public int Y;
-        private char _direction;
-        private readonly string _availableDirections = "NESW";
+        public char Direction;
+        public const string AvailableDirections = "NESW";
         public readonly string[] Obstacles;
         public bool ObstacleFound;
         private readonly MoveWestCommand _moveWestCommand;
         private readonly MoveNorthCommand _moveNorthCommand;
         private readonly MoveSouthCommand _moveSouthCommand;
         private readonly MoveEastCommand _moveEastCommand;
+        private readonly RotateRightCommand _rotateRightCommand;
+        private readonly RotateLeftCommand _rotateLeftCommand;
 
         public MarsRover(int x, int y, char direction, string[] obstacles)
         {
             X = x;
             Y = y;
-            _direction = direction;
+            Direction = direction;
             Obstacles = obstacles;
             _moveWestCommand = new MoveWestCommand(this);
             _moveNorthCommand = new MoveNorthCommand(this);
             _moveSouthCommand = new MoveSouthCommand(this);
             _moveEastCommand = new MoveEastCommand(this);
+            _rotateRightCommand = new RotateRightCommand(this);
+            _rotateLeftCommand = new RotateLeftCommand(this);
         }
         
         public string GetState()
         {
-            return !ObstacleFound ? $"{X}:{Y}:{_direction}" : $"O:{X}:{Y}:{_direction}";
+            return !ObstacleFound ? $"{X}:{Y}:{Direction}" : $"O:{X}:{Y}:{Direction}";
         }
 
         public void Execute(string commands)
@@ -38,7 +90,7 @@ namespace RefactoringToPatterns.CommandPattern
             {
                 if (command == 'M')
                 {
-                    switch (_direction)
+                    switch (Direction)
                     {
                         case 'E':
                             _moveEastCommand.Execute();
@@ -56,39 +108,11 @@ namespace RefactoringToPatterns.CommandPattern
                 }
                 else if(command == 'L')
                 {
-                    RotateLeft();
+                    _rotateLeftCommand.Execute();
                 } else if (command == 'R')
                 {
-                    RotateRight();
+                    _rotateRightCommand.Execute();
                 }
-            }
-        }
-
-        private void RotateRight()
-        {
-            // get new direction
-            var currentDirectionPosition = _availableDirections.IndexOf(_direction);
-            if (currentDirectionPosition != 3)
-            {
-                _direction = _availableDirections[currentDirectionPosition + 1];
-            }
-            else
-            {
-                _direction = _availableDirections[0];
-            }
-        }
-
-        private void RotateLeft()
-        {
-            // get new direction
-            var currentDirectionPosition = _availableDirections.IndexOf(_direction);
-            if (currentDirectionPosition != 0)
-            {
-                _direction = _availableDirections[currentDirectionPosition - 1];
-            }
-            else
-            {
-                _direction = _availableDirections[3];
             }
         }
     }
