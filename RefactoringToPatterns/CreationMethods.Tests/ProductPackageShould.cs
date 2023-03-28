@@ -58,10 +58,21 @@ namespace RefactoringToPatterns.CreationMethods.Tests
         [Fact]
         public void CreateWithInternetMobilePhoneNumberAndTv()
         {
-            var productPackage = ProductPackage.CreatePackageWith("100MB", mobileNumber: 654234587, tvChannels: new string[] {"LaLiga", "Estrenos"});
+            var productPackage = ProductPackage.CreatePackageWith("100MB", mobileNumber: 654234587, tvChannels: new[] {"LaLiga", "Estrenos"});
 
             Assert.True(productPackage.HasInternet());
             Assert.False(productPackage.HasVOIP());
+            Assert.True(productPackage.HasMobilePhone());
+            Assert.True(productPackage.HasTv());
+        }   
+        
+        [Fact]
+        public void CreateWithInternetVoipMobilePhoneNumberAndTv()
+        {
+            var productPackage = ProductPackage.CreatePackageWith("100MB", 91233788,654234587, new[] {"LaLiga", "Estrenos"});
+
+            Assert.True(productPackage.HasInternet());
+            Assert.True(productPackage.HasVOIP());
             Assert.True(productPackage.HasMobilePhone());
             Assert.True(productPackage.HasTv());
         }        
