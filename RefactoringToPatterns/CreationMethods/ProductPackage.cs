@@ -23,11 +23,16 @@ namespace RefactoringToPatterns.CreationMethods
             _tvChannels = tvChannels;
         }
 
-        public ProductPackage(string internetLabel, int telephoneNumber, string[] tvChannels)
+        private ProductPackage(string internetLabel, int telephoneNumber, string[] tvChannels)
         {
             _internetLabel = internetLabel;
             _telephoneNumber = telephoneNumber;
             _tvChannels = tvChannels;
+        }
+
+        public static ProductPackage CreatePackageWith(string internetLabel, int telephoneNumber, string[] tvChannels)
+        {
+            return new ProductPackage(internetLabel, telephoneNumber, tvChannels);
         }
 
         public bool HasInternet()
