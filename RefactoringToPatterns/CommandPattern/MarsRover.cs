@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using RefactoringToPatterns.CommandPattern.Commands;
 
 namespace RefactoringToPatterns.CommandPattern
@@ -57,21 +59,14 @@ namespace RefactoringToPatterns.CommandPattern
 
         private void MoveTowards(char direction)
         {
-            switch (direction)
+            var movementCommands = new Dictionary<char, Action>()
             {
-                case 'E':
-                    _moveEastCommand.Execute();
-                    break;
-                case 'S':
-                    _moveSouthCommand.Execute();
-                    break;
-                case 'W':
-                    _moveWestCommand.Execute();
-                    break;
-                case 'N':
-                    _moveNorthCommand.Execute();
-                    break;
-            }
+                { 'E', new MoveEastCommand(this).Execute},
+                { 'S', new MoveSouthCommand(this).Execute},
+                { 'W', new MoveWestCommand(this).Execute},
+                { 'N', new MoveNorthCommand(this).Execute}
+            };
+            movementCommands[direction]();
         }
     }
 }
