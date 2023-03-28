@@ -44,9 +44,19 @@ namespace RefactoringToPatterns.CommandPattern
         {
             foreach(var command in commands)
             {
-                if (command == 'M') _movementCommands[Direction]();
-                if (command == 'L' || command == 'R') _rotationCommands[command]();
+                if (IsMovementCommand(command)) _movementCommands[Direction]();
+                if (IsRotationCommand(command)) _rotationCommands[command]();
             }
+        }
+
+        private static bool IsMovementCommand(char command)
+        {
+            return command == 'M';
+        }
+
+        private static bool IsRotationCommand(char command)
+        {
+            return command == 'L' || command == 'R';
         }
     }
 }
