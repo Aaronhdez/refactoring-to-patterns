@@ -12,9 +12,8 @@ namespace RefactoringToPatterns.CommandPattern
         public const string AvailableDirections = "NESW";
         public readonly string[] Obstacles;
         public bool ObstacleFound;
-        private readonly RotateRightCommand _rotateRightCommand;
-        private readonly RotateLeftCommand _rotateLeftCommand;
-        private Dictionary<char, Action> _movementCommands;
+        private readonly Dictionary<char, Action> _movementCommands;
+        private readonly Dictionary<char, Action> _rotationCommands;
 
         public MarsRover(int x, int y, char direction, string[] obstacles)
         {
@@ -22,14 +21,17 @@ namespace RefactoringToPatterns.CommandPattern
             Y = y;
             Direction = direction;
             Obstacles = obstacles;
-            _rotateRightCommand = new RotateRightCommand(this);
-            _rotateLeftCommand = new RotateLeftCommand(this);
             _movementCommands = new Dictionary<char, Action>()
             {
                 { 'E', new MoveEastCommand(this).Execute},
                 { 'S', new MoveSouthCommand(this).Execute},
                 { 'W', new MoveWestCommand(this).Execute},
                 { 'N', new MoveNorthCommand(this).Execute}
+            };
+            _rotationCommands = new Dictionary<char, Action>()
+            {
+                { 'L', new RotateLeftCommand(this).Execute},
+                { 'R', new RotateRightCommand(this).Execute},
             };
         }
         
@@ -48,10 +50,10 @@ namespace RefactoringToPatterns.CommandPattern
                         MoveTowards(Direction);
                         break;
                     case 'L':
-                        _rotateLeftCommand.Execute();
+                        _rotationCommands[command]();
                         break;
                     case 'R':
-                        _rotateRightCommand.Execute();
+                        _rotationCommands[command]();
                         break;
                 }
             }
