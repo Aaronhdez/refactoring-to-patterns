@@ -2,7 +2,7 @@ using Xunit;
 
 namespace RefactoringToPatterns.CreationMethods.Tests
 {
-    public class ProductPackageShould 
+    public class ProductPackageShould
     {
         [Fact]
         public void CreateAProductPackageWithOnlyInternet()
@@ -32,7 +32,7 @@ namespace RefactoringToPatterns.CreationMethods.Tests
         {
             var productPackage = ProductPackage.CreatePackage()
                 .WithInternetLabel("100MB")
-                .WithTvChannels(new[] {"LaLiga", "Estrenos"});
+                .WithTvChannels(new[] { "LaLiga", "Estrenos" });
 
             Assert.True(productPackage.HasInternet());
             Assert.False(productPackage.HasVOIP());
@@ -45,7 +45,7 @@ namespace RefactoringToPatterns.CreationMethods.Tests
             var productPackage = ProductPackage.CreatePackage()
                 .WithInternetLabel("100MB")
                 .WithTelephoneNumber(91233788)
-                .WithTvChannels(new[] {"LaLiga", "Estrenos"});
+                .WithTvChannels(new[] { "LaLiga", "Estrenos" });
 
             Assert.True(productPackage.HasInternet());
             Assert.True(productPackage.HasVOIP());
@@ -63,21 +63,36 @@ namespace RefactoringToPatterns.CreationMethods.Tests
             Assert.False(productPackage.HasVOIP());
             Assert.True(productPackage.HasMobilePhone());
             Assert.False(productPackage.HasTv());
-        }   
-        
-        
+        }
+
+
         [Fact]
         public void CreateWithInternetMobilePhoneNumberAndTv()
         {
-            var productPackage = ProductPackage.CreatePackage().
-                WithInternetLabel("100MB").
-                WithCellphoneNumber(654234587).
-                WithTvChannels(new[] {"LaLiga", "Estrenos"});
-        
+            var productPackage = ProductPackage.CreatePackage()
+                .WithInternetLabel("100MB")
+                .WithCellphoneNumber(654234587)
+                .WithTvChannels(new[] { "LaLiga", "Estrenos" });
+
             Assert.True(productPackage.HasInternet());
             Assert.False(productPackage.HasVOIP());
             Assert.True(productPackage.HasMobilePhone());
             Assert.True(productPackage.HasTv());
-        }    
+        }
+
+        [Fact]
+        public void CreateWithInternetVoipMobilePhoneNumberAndTv()
+        {
+            var productPackage = ProductPackage.CreatePackage()
+                .WithInternetLabel("100MB")
+                .WithTelephoneNumber(91233788)
+                .WithCellphoneNumber(654234587)
+                .WithTvChannels(new[] { "LaLiga", "Estrenos" });
+
+            Assert.True(productPackage.HasInternet());
+            Assert.True(productPackage.HasVOIP());
+            Assert.True(productPackage.HasMobilePhone());
+            Assert.True(productPackage.HasTv());
+        }
     }
 }
