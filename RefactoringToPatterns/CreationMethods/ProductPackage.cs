@@ -17,10 +17,15 @@ namespace RefactoringToPatterns.CreationMethods
             _telephoneNumber = telephoneNumber;
         }
 
-        public ProductPackage(string internetLabel, string[] tvChannels)
+        private ProductPackage(string internetLabel, string[] tvChannels)
         {
             _internetLabel = internetLabel;
             _tvChannels = tvChannels;
+        }
+
+        public static ProductPackage CreatePackageWith(string internetLabel, string[] tvChannels)
+        {
+            return new ProductPackage(internetLabel, tvChannels);
         }
 
         private ProductPackage(string internetLabel, int telephoneNumber, string[] tvChannels)
