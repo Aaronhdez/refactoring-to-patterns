@@ -27,7 +27,7 @@ namespace RefactoringToPatterns.CreationMethods.Tests
         [Fact]
         public void CreateWithInternetAndTv()
         {
-            var productPackage = ProductPackage.CreatePackageWith("100MB", new[] {"LaLiga", "Estrenos"});
+            var productPackage = ProductPackage.CreatePackageWith("100MB", tvChannels: new[] {"LaLiga", "Estrenos"});
 
             Assert.True(productPackage.HasInternet());
             Assert.False(productPackage.HasVOIP());
