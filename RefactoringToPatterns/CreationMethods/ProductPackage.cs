@@ -11,10 +11,15 @@ namespace RefactoringToPatterns.CreationMethods
             _internetLabel = internetLabel;
         }
 
-        public ProductPackage(string internetLabel, int telephoneNumber)
+        private ProductPackage(string internetLabel, int telephoneNumber)
         {
             _internetLabel = internetLabel;
             _telephoneNumber = telephoneNumber;
+        }
+
+        public static ProductPackage CreatePackageWith(string internetLabel, int telephoneNumber)
+        {
+            return new ProductPackage(internetLabel, telephoneNumber);
         }
 
         private ProductPackage(string internetLabel, string[] tvChannels)
@@ -23,16 +28,16 @@ namespace RefactoringToPatterns.CreationMethods
             _tvChannels = tvChannels;
         }
 
-        public static ProductPackage CreatePackageWith(string internetLabel, string[] tvChannels)
-        {
-            return new ProductPackage(internetLabel, tvChannels);
-        }
-
         private ProductPackage(string internetLabel, int telephoneNumber, string[] tvChannels)
         {
             _internetLabel = internetLabel;
             _telephoneNumber = telephoneNumber;
             _tvChannels = tvChannels;
+        }
+
+        public static ProductPackage CreatePackageWith(string internetLabel, string[] tvChannels)
+        {
+            return new ProductPackage(internetLabel, tvChannels);
         }
 
         public static ProductPackage CreatePackageWith(string internetLabel, int telephoneNumber, string[] tvChannels)
