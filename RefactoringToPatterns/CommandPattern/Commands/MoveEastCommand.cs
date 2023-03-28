@@ -13,10 +13,22 @@ namespace RefactoringToPatterns.CommandPattern.Commands
 
         public void Execute()
         {
-            _marsRover.ObstacleFound = _marsRover.Obstacles.Contains($"{_marsRover.X + 1}:{_marsRover.Y}");
-            // check if rover reached plateau limit or found an obstacle
-            _marsRover.X = _marsRover.X < 9 && !_marsRover.ObstacleFound ? _marsRover.X += 1 : _marsRover.X;
-            return;
+            _marsRover.X = ALimitHasBeenReached() ? _marsRover.X += 1 : _marsRover.X;
+        }
+
+        private bool ALimitHasBeenReached()
+        {
+            return APlateauEdgeHasBeenReached() && !AnObstacleFound();
+        }
+
+        private bool APlateauEdgeHasBeenReached()
+        {
+            return _marsRover.X < 9;
+        }
+
+        private bool AnObstacleFound()
+        {
+            return _marsRover.ObstacleFound = _marsRover.Obstacles.Contains($"{_marsRover.X + 1}:{_marsRover.Y}");
         }
     }
 }
