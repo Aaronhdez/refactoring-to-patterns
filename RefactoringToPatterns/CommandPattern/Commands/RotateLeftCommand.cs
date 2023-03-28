@@ -2,7 +2,7 @@
 {
     public class RotateLeftCommand : ICommand
     {
-        private MarsRover _marsRover;
+        private readonly MarsRover _marsRover;
 
         public RotateLeftCommand(MarsRover marsRover)
         {
@@ -11,16 +11,15 @@
 
         public void Execute()
         {
-            // get new direction
             var currentDirectionPosition = MarsRover.AvailableDirections.IndexOf(_marsRover.Direction);
-            if (currentDirectionPosition != 0)
-            {
-                _marsRover.Direction = MarsRover.AvailableDirections[currentDirectionPosition - 1];
-            }
-            else
-            {
-                _marsRover.Direction = MarsRover.AvailableDirections[3];
-            }
+            UpdateDirection(currentDirectionPosition);
+        }
+
+        private void UpdateDirection(int currentDirectionPosition)
+        {
+            _marsRover.Direction = currentDirectionPosition != 0
+                ? MarsRover.AvailableDirections[currentDirectionPosition - 1]
+                : MarsRover.AvailableDirections[3];
         }
     }
 }
