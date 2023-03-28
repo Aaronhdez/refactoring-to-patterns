@@ -2,12 +2,13 @@ using Xunit;
 
 namespace RefactoringToPatterns.CreationMethods.Tests
 {
-    public class ProductPackageShould
+    public class ProductPackageShould 
     {
         [Fact]
         public void CreateAProductPackageWithOnlyInternet()
         {
-            var productPackage = ProductPackage.CreatePackageWith("100MB");
+            var productPackage = ProductPackage.CreatePackage()
+                .WithInternetLabel("100MB");
 
             Assert.True(productPackage.HasInternet());
             Assert.False(productPackage.HasVOIP());
@@ -17,7 +18,9 @@ namespace RefactoringToPatterns.CreationMethods.Tests
         [Fact]
         public void CreateWithInternetAndVoip()
         {
-            var productPackage = ProductPackage.CreatePackageWith("100MB", 91233788);
+            var productPackage = ProductPackage.CreatePackage()
+                .WithInternetLabel("100MB")
+                .WithTelephoneNumber(91233788);
 
             Assert.True(productPackage.HasInternet());
             Assert.True(productPackage.HasVOIP());
@@ -27,7 +30,9 @@ namespace RefactoringToPatterns.CreationMethods.Tests
         [Fact]
         public void CreateWithInternetAndTv()
         {
-            var productPackage = ProductPackage.CreatePackageWith("100MB", tvChannels: new[] {"LaLiga", "Estrenos"});
+            var productPackage = ProductPackage.CreatePackage()
+                .WithInternetLabel("100MB")
+                .WithTvChannels(new[] {"LaLiga", "Estrenos"});
 
             Assert.True(productPackage.HasInternet());
             Assert.False(productPackage.HasVOIP());
@@ -37,7 +42,10 @@ namespace RefactoringToPatterns.CreationMethods.Tests
         [Fact]
         public void CreateWithInternetVoipAndTv()
         {
-            var productPackage = ProductPackage.CreatePackageWith("100MB", 91233788,new string[] {"LaLiga", "Estrenos"});
+            var productPackage = ProductPackage.CreatePackage()
+                .WithInternetLabel("100MB")
+                .WithTelephoneNumber(91233788)
+                .WithTvChannels(new[] {"LaLiga", "Estrenos"});
 
             Assert.True(productPackage.HasInternet());
             Assert.True(productPackage.HasVOIP());
