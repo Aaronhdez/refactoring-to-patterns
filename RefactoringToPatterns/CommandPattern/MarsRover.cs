@@ -2,54 +2,6 @@ using RefactoringToPatterns.CommandPattern.Commands;
 
 namespace RefactoringToPatterns.CommandPattern
 {
-    public class RotateRightCommand : ICommand
-    {
-        private readonly MarsRover _marsRover;
-
-        public RotateRightCommand(MarsRover marsRover)
-        {
-            _marsRover = marsRover;
-        }
-
-        public void Execute()
-        {
-            // get new direction
-            var currentDirectionPosition = MarsRover.AvailableDirections.IndexOf(_marsRover.Direction);
-            if (currentDirectionPosition != 3)
-            {
-                _marsRover.Direction = MarsRover.AvailableDirections[currentDirectionPosition + 1];
-            }
-            else
-            {
-                _marsRover.Direction = MarsRover.AvailableDirections[0];
-            }
-        }
-    }
-
-    public class RotateLeftCommand : ICommand
-    {
-        private MarsRover _marsRover;
-
-        public RotateLeftCommand(MarsRover marsRover)
-        {
-            _marsRover = marsRover;
-        }
-
-        public void Execute()
-        {
-            // get new direction
-            var currentDirectionPosition = MarsRover.AvailableDirections.IndexOf(_marsRover.Direction);
-            if (currentDirectionPosition != 0)
-            {
-                _marsRover.Direction = MarsRover.AvailableDirections[currentDirectionPosition - 1];
-            }
-            else
-            {
-                _marsRover.Direction = MarsRover.AvailableDirections[3];
-            }
-        }
-    }
-
     public class MarsRover
     {
         public int X;
