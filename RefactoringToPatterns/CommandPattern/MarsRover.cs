@@ -2,9 +2,14 @@ using System.Linq;
 
 namespace RefactoringToPatterns.CommandPattern
 {
-    public class MoveWestCommand
+    public interface ICommand
     {
-        private MarsRover _marsRover;
+        void Execute();
+    }
+
+    public class MoveWestCommand : ICommand
+    {
+        private readonly MarsRover _marsRover;
 
         public MoveWestCommand(MarsRover marsRover)
         {
@@ -19,9 +24,9 @@ namespace RefactoringToPatterns.CommandPattern
         }
     }
 
-    public class MoveNorthCommand
+    public class MoveNorthCommand : ICommand
     {
-        private MarsRover _marsRover;
+        private readonly MarsRover _marsRover;
 
         public MoveNorthCommand(MarsRover marsRover)
         {
@@ -36,9 +41,9 @@ namespace RefactoringToPatterns.CommandPattern
         }
     }
 
-    public class MoveSouthCommand
+    public class MoveSouthCommand : ICommand
     {
-        private MarsRover _marsRover;
+        private readonly MarsRover _marsRover;
 
         public MoveSouthCommand(MarsRover marsRover)
         {
@@ -53,9 +58,9 @@ namespace RefactoringToPatterns.CommandPattern
         }
     }
 
-    public class MoveEastCommand
+    public class MoveEastCommand : ICommand
     {
-        private MarsRover _marsRover;
+        private readonly MarsRover _marsRover;
 
         public MoveEastCommand(MarsRover marsRover)
         {
