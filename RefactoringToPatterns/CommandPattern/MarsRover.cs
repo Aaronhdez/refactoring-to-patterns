@@ -44,24 +44,9 @@ namespace RefactoringToPatterns.CommandPattern
         {
             foreach(var command in commands)
             {
-                switch (command)
-                {
-                    case 'M':
-                        MoveTowards(Direction);
-                        break;
-                    case 'L':
-                        _rotationCommands[command]();
-                        break;
-                    case 'R':
-                        _rotationCommands[command]();
-                        break;
-                }
+                if (command == 'M') _movementCommands[Direction]();
+                if (command == 'L' || command == 'R') _rotationCommands[command]();
             }
-        }
-
-        private void MoveTowards(char direction)
-        {
-            _movementCommands[direction]();
         }
     }
 }
