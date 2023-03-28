@@ -38,33 +38,39 @@ namespace RefactoringToPatterns.CommandPattern
 
         public void Execute(string commands)
         {
-            foreach(char command in commands)
+            foreach(var command in commands)
             {
-                if (command == 'M')
+                switch (command)
                 {
-                    switch (Direction)
-                    {
-                        case 'E':
-                            _moveEastCommand.Execute();
-                            break;
-                        case 'S':
-                            _moveSouthCommand.Execute();
-                            break;
-                        case 'W':
-                            _moveWestCommand.Execute();
-                            break;
-                        case 'N':
-                            _moveNorthCommand.Execute();
-                            break;
-                    }
+                    case 'M':
+                        MoveTowards(Direction);
+                        break;
+                    case 'L':
+                        _rotateLeftCommand.Execute();
+                        break;
+                    case 'R':
+                        _rotateRightCommand.Execute();
+                        break;
                 }
-                else if(command == 'L')
-                {
-                    _rotateLeftCommand.Execute();
-                } else if (command == 'R')
-                {
-                    _rotateRightCommand.Execute();
-                }
+            }
+        }
+
+        private void MoveTowards(char direction)
+        {
+            switch (direction)
+            {
+                case 'E':
+                    _moveEastCommand.Execute();
+                    break;
+                case 'S':
+                    _moveSouthCommand.Execute();
+                    break;
+                case 'W':
+                    _moveWestCommand.Execute();
+                    break;
+                case 'N':
+                    _moveNorthCommand.Execute();
+                    break;
             }
         }
     }
