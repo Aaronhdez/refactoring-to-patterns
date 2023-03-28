@@ -5,6 +5,7 @@ namespace RefactoringToPatterns.CreationMethods
         private string _internetLabel;
         private int? _telephoneNumber;
         private string[] _tvChannels;
+        private int? _cellphoneNumber;
 
         private ProductPackage()
         {
@@ -27,6 +28,12 @@ namespace RefactoringToPatterns.CreationMethods
             return this;
         }
 
+        public ProductPackage WithCellphoneNumber(int cellphoneNumber)
+        {
+            _cellphoneNumber = cellphoneNumber;
+            return this;
+        }
+
         public ProductPackage WithTvChannels(string[] tvChannels)
         {
             _tvChannels = tvChannels;
@@ -46,6 +53,11 @@ namespace RefactoringToPatterns.CreationMethods
         public bool HasTv()
         {
             return _tvChannels != null;
+        }
+
+        public bool HasMobilePhone()
+        {
+            return _cellphoneNumber != null;
         }
     }
 }

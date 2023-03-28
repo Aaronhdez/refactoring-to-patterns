@@ -51,5 +51,18 @@ namespace RefactoringToPatterns.CreationMethods.Tests
             Assert.True(productPackage.HasVOIP());
             Assert.True(productPackage.HasTv());
         }
+
+        [Fact]
+        public void CreateWithInternetAndMobilePhoneNumber()
+        {
+            var productPackage = ProductPackage.CreatePackage()
+                .WithInternetLabel("100MB")
+                .WithCellphoneNumber(654423538);
+
+            Assert.True(productPackage.HasInternet());
+            Assert.False(productPackage.HasVOIP());
+            Assert.True(productPackage.HasMobilePhone());
+            Assert.False(productPackage.HasTv());
+        }   
     }
 }
