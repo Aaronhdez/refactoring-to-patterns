@@ -12,12 +12,9 @@ namespace RefactoringToPatterns.CommandPattern
         public const string AvailableDirections = "NESW";
         public readonly string[] Obstacles;
         public bool ObstacleFound;
-        private readonly MoveWestCommand _moveWestCommand;
-        private readonly MoveNorthCommand _moveNorthCommand;
-        private readonly MoveSouthCommand _moveSouthCommand;
-        private readonly MoveEastCommand _moveEastCommand;
         private readonly RotateRightCommand _rotateRightCommand;
         private readonly RotateLeftCommand _rotateLeftCommand;
+        private Dictionary<char, Action> _movementCommands;
 
         public MarsRover(int x, int y, char direction, string[] obstacles)
         {
@@ -25,12 +22,15 @@ namespace RefactoringToPatterns.CommandPattern
             Y = y;
             Direction = direction;
             Obstacles = obstacles;
-            _moveWestCommand = new MoveWestCommand(this);
-            _moveNorthCommand = new MoveNorthCommand(this);
-            _moveSouthCommand = new MoveSouthCommand(this);
-            _moveEastCommand = new MoveEastCommand(this);
             _rotateRightCommand = new RotateRightCommand(this);
             _rotateLeftCommand = new RotateLeftCommand(this);
+            _movementCommands = new Dictionary<char, Action>()
+            {
+                { 'E', new MoveEastCommand(this).Execute},
+                { 'S', new MoveSouthCommand(this).Execute},
+                { 'W', new MoveWestCommand(this).Execute},
+                { 'N', new MoveNorthCommand(this).Execute}
+            };
         }
         
         public string GetState()
@@ -59,14 +59,7 @@ namespace RefactoringToPatterns.CommandPattern
 
         private void MoveTowards(char direction)
         {
-            var movementCommands = new Dictionary<char, Action>()
-            {
-                { 'E', new MoveEastCommand(this).Execute},
-                { 'S', new MoveSouthCommand(this).Execute},
-                { 'W', new MoveWestCommand(this).Execute},
-                { 'N', new MoveNorthCommand(this).Execute}
-            };
-            movementCommands[direction]();
+            _movementCommands[direction]();
         }
     }
 }
